@@ -1,0 +1,209 @@
+---
+Hecho por: A00227714 José Miguel Beltrán Cinco. A00232305 Jorge Esteban Cárdenas Esquer A00227718 Manuel Eduardo Ochoa Obezo Para la materia de Analisis de Biologia Computacional
+title: "R Notebook"
+output: html_notebook
+code_folding: hide
+---
+```{r}
+library(seqinr)
+library(ggplot2)
+library(reshape2)
+
+complementaria <- function(virus){
+  virus2<-virus
+  
+  print(virus[1:15])
+  for (n in 1:length(virus)) {
+    if(virus[n]=="A")
+      {virus2[n]<-'T'}
+    if(virus[n]=='T')
+      {virus2[n]<-'A'}
+    if(virus[n]=='C')
+      {virus2[n]<-'G'}
+    if(virus[n]=='G')
+      {virus2[n]<-'C'}
+  }
+  
+  print(virus2[1:15])
+  
+  return(virus2)
+}
+
+```
+
+
+
+```{r}
+
+zika <- read.fasta(file = 'zika.fasta', as.string = TRUE, seqonly = TRUE)
+          
+zika <- unlist(zika)
+zika <- strsplit(zika, "")
+zika <- unlist(zika)
+
+
+
+zika_data <- table(zika)
+
+print(zika_data)
+
+
+total<-sum(zika_data)
+print(total)
+
+gc <- (sum(zika_data[2],zika_data[3])/total)*100
+
+print(gc)
+
+
+zika_comp<-complementaria(zika)
+```
+```{r}
+sars <- read.fasta(file = 'sars.fasta', as.string = TRUE, seqonly = TRUE)
+          
+sars <- unlist(sars)
+sars <- strsplit(sars, "")
+sars <- unlist(sars)
+
+
+
+sars_data <- table(sars)
+
+print(sars_data)
+
+
+total<-sum(sars_data)
+print(total)
+
+gc <- (sum(sars_data[2],sars_data[3])/total)*100
+
+print(gc)
+
+
+sars_comp<-complementaria(sars)
+```
+```{r}
+wuhan <- read.fasta(file = 'wuhan.fasta', as.string = TRUE, seqonly = TRUE)
+          
+wuhan <- unlist(wuhan)
+wuhan <- strsplit(wuhan, "")
+wuhan <- unlist(wuhan)
+
+
+
+wuhan_data <- table(wuhan)
+
+print(wuhan_data)
+
+
+total<-sum(wuhan_data)
+print(total)
+
+gc <- (sum(wuhan_data[2],wuhan_data[3])/total)*100
+
+print(gc)
+
+
+wuhan_comp<-complementaria(wuhan)
+```
+
+```{r}
+mdeast <- read.fasta(file = 'mdeast.fasta', as.string = TRUE, seqonly = TRUE)
+          
+mdeast <- unlist(mdeast)
+mdeast <- strsplit(mdeast, "")
+mdeast <- unlist(mdeast)
+
+
+
+mdeast_data <- table(mdeast)
+
+print(mdeast_data)
+
+
+total<-sum(mdeast_data)
+print(total)
+
+gc <- (sum(mdeast_data[2],mdeast_data[3])/total)*100
+
+print(gc)
+
+
+mdeast_comp<-complementaria(mdeast)
+```
+```{r}
+dengue <- read.fasta(file = 'dengue.fasta', as.string = TRUE, seqonly = TRUE)
+          
+dengue <- unlist(dengue)
+dengue <- strsplit(dengue, "")
+dengue <- unlist(dengue)
+
+
+
+dengue_data <- table(dengue)
+
+print(dengue_data)
+
+
+total<-sum(dengue_data)
+print(total)
+
+gc <- (sum(dengue_data[2],dengue_data[3])/total)*100
+
+print(gc)
+
+
+dengue_comp<-complementaria(dengue)
+```
+```{r}
+H1N1 <- read.fasta(file = 'h1n1.fasta', as.string = TRUE, seqonly = TRUE)
+          
+H1N1 <- unlist(H1N1)
+H1N1 <- strsplit(H1N1, "")
+H1N1 <- unlist(H1N1)
+
+H1N1 <- H1N1[-which(H1N1=='K')]
+
+H1N1_data <- table(H1N1)
+
+print(H1N1_data)
+
+
+total<-sum(H1N1_data)
+print(total)
+
+gc <- (sum(H1N1_data[2],H1N1_data[3])/total)*100
+
+print(gc)
+
+
+H1N1_comp<-complementaria(H1N1)
+```
+```{r}
+data <- data.frame(
+  "Zika" = c(zika_data[1],zika_data[2],zika_data[3],zika_data[4]),
+  "Sars" = c(sars_data[1],sars_data[2],sars_data[3],sars_data[4]),
+  "Wuhan" = c(wuhan_data[1],wuhan_data[2],wuhan_data[3],wuhan_data[4]),
+  "Middle East" = c(mdeast_data[1],mdeast_data[2],mdeast_data[3],mdeast_data[4]),
+  "Dengue" = c(dengue_data[1],dengue_data[2],dengue_data[3],dengue_data[4]),
+  "H1N1" = c(H1N1_data[1],H1N1_data[2],H1N1_data[3],H1N1_data[4])
+  )
+
+print(data)
+
+v1<-as.vector(data[['Zika']])
+v2<-as.vector(data[['Sars']])
+v3<-as.vector(data[['Wuhan']])
+v4<-as.vector(data[['Middle East']])
+v5<-as.vector(data[['Dengue']])
+v6<-as.vector(data[['H1N1']])
+
+
+```
+
+```{r}
+library(tidyverse);
+data %>%       rownames_to_column() %>%        pivot_longer(-rowname) %>%       ggplot(aes(rowname, value, fill = name)) +       geom_col()
+
+```
+
