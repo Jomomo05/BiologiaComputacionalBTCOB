@@ -1,0 +1,226 @@
+---
+Entregable 1 Hecho por: A00227714 José Miguel Beltrán Cinco. A00232305 Jorge Esteban Cárdenas Esquer A00227718 Manuel Eduardo Ochoa Obezo Para la materia de Analisis de Biologia Computacional
+title: "Entregable 1"
+output: html_notebook
+code_folding: hide
+
+---
+
+
+
+```{r}
+library(seqinr)
+library(ggplot2)
+library(reshape2)
+```
+Se presentan las lecturas y datos básicos de cada secuencia, en orden:
+
+-La cantidad de nucleotidos A,C,G y Y que la componen.
+-El porcentaje de los nucleotidos que la componen.
+-La longitud de la secuencia Y
+-El porcentraje de nucleotidos CG que la componen.
+
+
+Variante Cero (WIV04/2019) https://www.ncbi.nlm.nih.gov/nuccore/1802633808 
+```{r}
+sars <- read.fasta(file = 'sars_2.fasta', as.string = TRUE, seqonly = TRUE)
+          
+sars <- unlist(sars)
+sars <- strsplit(sars, "")
+sars <- unlist(sars)
+
+length_sars <- length(sars)
+cat("La longitud es: \n",length_sars,'\n')
+
+
+sars_data <- table(sars)
+cat("\nLa cantidad de nucleotidos de cada tipo es: \n")
+sars_data
+
+sars_data_porcentajes <- (sars_data/length_sars)*100
+cat("\nEl porcentaje de nucleotidos de cada tipo es: \n")
+sars_data_porcentajes
+
+gc_sars <- (sum(sars_data[2],sars_data[3])/length_sars)*100
+cat("\nEl porcentaje de GC es: \n")
+gc_sars
+
+rev_sars <- rev(sars)
+cat("\nLos primeros 15 nucleotidos de la secuencia y los ultimos 15 nucleotidos despues de invertirse son: \n")
+sars[1:15]
+rev_sars[(length_sars-14):length_sars]
+```
+Variante de Brasil (P.1)https://www.ncbi.nlm.nih.gov/nuccore/MW642250.1 
+```{r}
+sars_brazil <- read.fasta(file = 'sars_brazil.fasta', as.string = TRUE, seqonly = TRUE)
+          
+sars_brazil <- unlist(sars_brazil)
+sars_brazil <- strsplit(sars_brazil, "")
+sars_brazil <- unlist(sars_brazil)
+
+sars_brazil <- sars_brazil[-which(sars_brazil=='M')]
+
+length_sars_brazil <- length(sars_brazil)
+cat("La longitud es: \n",length_sars,'\n')
+length_sars_brazil
+
+sars_brazil_data <- table(sars_brazil)
+cat("\nLa cantidad de nucleotidos de cada tipo es: \n")
+sars_brazil_data
+
+sars_brazil_data_porcentajes <- (sars_brazil_data/length_sars_brazil)*100
+cat("\nEl porcentaje de nucleotidos de cada tipo es: \n")
+sars_brazil_data_porcentajes
+
+gc_brazil <- (sum(sars_brazil_data[2],sars_brazil_data[3])/length_sars_brazil)*100
+cat("\nEl porcentaje de GC es: \n")
+
+gc_brazil
+
+rev_sars_brazil<-rev(sars_brazil)
+cat("\nLos primeros 15 nucleotidos de la secuencia y los ultimos 15 nucleotidos despues de invertirse son: \n")
+
+sars_brazil[1:15]
+rev_sars_brazil[(length_sars_brazil-14):length_sars_brazil]
+
+
+```
+Variante de Sudafrica(ZAF/R03006/2020) https://www.ncbi.nlm.nih.gov/nuccore/MT324062.1 
+```{r}
+sars_sud <- read.fasta(file = 'sars_sud.fasta', as.string = TRUE, seqonly = TRUE)
+          
+sars_sud <- unlist(sars_sud)
+sars_sud <- strsplit(sars_sud, "")
+sars_sud <- unlist(sars_sud)
+
+length_sars_sud <- length(sars_sud)
+cat("La longitud es: \n",length_sars,'\n')
+length_sars_sud
+
+sars_sud_data <- table(sars_sud)
+cat("\nLa cantidad de nucleotidos de cada tipo es: \n")
+sars_sud_data
+
+sars_sud_data_porcentajes <- (sars_sud_data/length_sars_sud)*100
+cat("\nEl porcentaje de nucleotidos de cada tipo es: \n")
+sars_sud_data_porcentajes
+
+gc_sud <- (sum(sars_sud_data[2],sars_sud_data[3])/length_sars_sud)*100
+cat("\nEl porcentaje de GC es: \n")
+
+gc_sud
+
+rev_sars_sud<-rev(sars_sud)
+cat("\nLos primeros 15 nucleotidos de la secuencia y los ultimos 15 nucleotidos despues de invertirse son: \n")
+
+sars_sud[1:15]
+rev_sars_sud[(length_sars_sud-14):length_sars_sud]
+
+
+```
+Variante de Inglaterra/UK (B.1.1.7) https://www.ncbi.nlm.nih.gov/nuccore/MW735442.1 
+```{r}
+sars_uk <- read.fasta(file = 'sars_uk.fasta', as.string = TRUE, seqonly = TRUE)
+          
+sars_uk <- unlist(sars_uk)
+sars_uk <- strsplit(sars_uk, "")
+sars_uk <- unlist(sars_uk)
+
+sars_uk <- sars_uk[-which(sars_uk=='N')]
+
+length_sars_uk <- length(sars_uk)
+cat("La longitud es: \n",length_sars,'\n')
+length_sars_uk
+
+sars_uk_data <- table(sars_uk)
+cat("\nLa cantidad de nucleotidos de cada tipo es: \n")
+sars_uk_data
+
+sars_uk_data_porcentajes <- (sars_uk_data/length_sars_uk)*100
+cat("\nEl porcentaje de nucleotidos de cada tipo es: \n")
+sars_uk_data_porcentajes
+
+gc_uk <- (sum(sars_uk_data[2],sars_uk_data[3])/length_sars_uk)*100
+cat("\nEl porcentaje de GC es: \n")
+
+gc_uk
+
+rev_sars_uk<-rev(sars_uk)
+cat("\nLos primeros 15 nucleotidos de la secuencia y los ultimos 15 nucleotidos despues de invertirse son: \n")
+
+sars_uk[1:15]
+rev_sars_uk[(length_sars_uk-14):length_sars_uk]
+
+```
+
+
+Variante de Mexico (MEX/145340/2021) https://www.ncbi.nlm.nih.gov/nuccore/MW884220 
+```{r}
+sars_mex <- read.fasta(file = 'sars_mex.fasta', as.string = TRUE, seqonly = TRUE)
+          
+sars_mex <- unlist(sars_mex)
+sars_mex <- strsplit(sars_mex, "")
+sars_mex <- unlist(sars_mex)
+
+sars_mex <- sars_mex[-which(sars_mex=='N')]
+
+length_sars_mex <- length(sars_mex)
+cat("La longitud es: \n",length_sars,'\n')
+length_sars_mex
+
+sars_mex_data <- table(sars_mex)
+cat("\nLa cantidad de nucleotidos de cada tipo es: \n")
+sars_mex_data
+
+sars_mex_data_porcentajes <- (sars_mex_data/length_sars_mex)*100
+cat("\nEl porcentaje de nucleotidos de cada tipo es: \n")
+sars_mex_data_porcentajes
+
+gc_mex<- (sum(sars_mex_data[2],sars_mex_data[3])/length_sars_mex)*100
+cat("\nEl porcentaje de GC es: \n")
+
+gc_mex
+
+rev_sars_mex<-rev(sars_mex)
+cat("\nLos primeros 15 nucleotidos de la secuencia y los ultimos 15 nucleotidos despues de invertirse son: \n")
+
+sars_mex[1:15]
+rev_sars_mex[(length_sars_mex-14):length_sars_mex]
+```
+
+```{r}
+longitud <- data.frame(
+  length_sars,
+  length_sars_brazil,
+  length_sars_sud,
+  length_sars_uk,
+  length_sars_mex
+)
+
+data<-data.frame(
+  row.names = c("MEX/145340/2021","P.1 Brasil","ZAF/R03006/2020","B.1.1.7 UK","WIV04/2019"),
+  "A"=c(sars_data[1],sars_brazil_data[1],sars_sud_data[1],sars_uk_data[1],sars_mex_data[1]),  
+  "C"=c(sars_data[2],sars_brazil_data[2],sars_sud_data[2],sars_uk_data[2],sars_mex_data[2]), 
+  "G"=c(sars_data[3],sars_brazil_data[3],sars_sud_data[3],sars_uk_data[3],sars_mex_data[3]),
+  "T"=c(sars_data[4],sars_brazil_data[4],sars_sud_data[4],sars_uk_data[4],sars_mex_data[4])  
+)
+
+gc <- data.frame(
+  gc_sars,
+  gc_brazil,
+  gc_sud,
+  gc_uk,
+  gc_mex
+)
+
+```
+
+```{r}
+library(tidyverse);
+data %>%       rownames_to_column() %>%        pivot_longer(-rowname) %>%       ggplot(aes(rowname, value, fill = name)) +       geom_col() + xlab("Variantes de SARS-CoV-2") + ylab("Cantidad") + labs(title = "Nucleotidos por Variante de SARS-CoV-2", fill = "Nucleotidos")
+```
+
+Finalmente, a partir de la gráfica encontrada a partir de los datos obtenidos de las variantes, podemos observar que esencialmente no hay ninguna diferencia, salvo una, las variantes difieren ligeramente en la cantidad de nucleótidos en sus secuencias, aunque esto puede atribuirse directamente a los métodos experimentales o a la naturaleza de las diferentes variantes, es digno de mención. Nótese que la variante de UK es la que más se ve afectada por este cambio, mostrando una discrepancia visualmente detectable, asimismo, esta variante también tiene un menor porcentaje de %GC por .9% menos que las otras variantes.
+
+Asimismo, la mayoría de las variantes presentan discrepancias mínimas en los criterios establecidos para la investigación, sin embargo, es destacable considerar que la investigación estaba dirigida a analizar la cantidad de nucleótidos que se encuentran en las diferentes variantes y como difieren en cantidad, no en forma, por lo que se concluye que las mutaciones surgen a partir de la reorganización de nucleótidos, no necesariamente de la cantidad de estos.
+
